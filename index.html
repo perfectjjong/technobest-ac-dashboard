@@ -48,9 +48,9 @@ tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-seri
   header .max-w-\[1600px\]{padding:12px 12px;gap:8px}
   header h1{font-size:16px}
   header .text-right{text-align:left;font-size:10px}
-  .sticky.top-0 .max-w-\[1600px\]{padding:6px 8px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+  .sticky.top-0 .max-w-\[1600px\]{padding:6px 8px;flex-wrap:wrap}
   .sticky.top-0 .max-w-\[1600px\]::-webkit-scrollbar{display:none}
-  nav .flex{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  nav .flex{flex-wrap:wrap;padding-bottom:4px}
   nav .flex::-webkit-scrollbar{display:none}
   nav a{flex-shrink:0}
   main{padding:8px!important}
@@ -90,7 +90,7 @@ tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-seri
 
 <!-- GLOBAL FILTER BAR -->
 <div class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm no-print">
-  <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-2 sm:py-2.5 flex items-center gap-2 overflow-x-auto" style="-webkit-overflow-scrolling:touch">
+  <div class="max-w-[1600px] mx-auto px-3 sm:px-6 py-2 sm:py-2.5 flex flex-wrap items-center gap-2">
     <span class="text-[10px] font-bold text-navy-700 uppercase tracking-wider">Global</span>
     <div id="gf_date"></div>
     <div class="w-px h-5 bg-gray-300"></div>
@@ -103,7 +103,7 @@ tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-seri
 </div>
 
 <nav class="max-w-[1600px] mx-auto px-3 sm:px-6 pt-2 sm:pt-3 no-print">
-  <div class="flex gap-1.5 text-[11px] overflow-x-auto pb-1" style="-webkit-overflow-scrolling:touch">
+  <div class="flex flex-wrap gap-1.5 text-[11px]">
     <a href="#sec-kpi" class="px-3 py-1 bg-navy-800 text-white rounded-full font-medium">KPIs</a>
     <a href="#sec-alert" class="px-3 py-1 bg-white text-navy-800 rounded-full border border-gray-200 hover:bg-navy-50">Price Alerts</a>
     <a href="#sec-new" class="px-3 py-1 bg-white text-navy-800 rounded-full border border-gray-200 hover:bg-navy-50">New/Disc</a>
@@ -327,7 +327,7 @@ class MS {
       if(this.colorFn)sp.style.cssText=`color:${this.colorFn(o)};font-weight:600`;
       lbl.appendChild(sp);list.appendChild(lbl);
     });
-    menu.appendChild(list);w.appendChild(menu);this.menuEl=menu;
+    menu.appendChild(list);w.appendChild(menu);this.menuEl=menu;menu.addEventListener('click',e=>e.stopPropagation());
     btn.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.ms-menu.open').forEach(m=>{if(m!==menu){m.classList.remove('open');_removeOverlay();}});if(!menu.classList.contains('open')){menu.classList.add('open');if(window.innerWidth<=640)_addOverlay(menu);}else{menu.classList.remove('open');_removeOverlay();}});
     this.listEl=list;
     this.el.appendChild(w);this._upd();
