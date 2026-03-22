@@ -55,10 +55,7 @@ tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-seri
   nav a{flex-shrink:0}
   main{padding:8px!important}
   main section{padding:10px!important}
-  .filter-bar,.flex.flex-wrap.items-center.gap-2{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
-  .filter-bar::-webkit-scrollbar{display:none}
-  .ms-menu{position:fixed!important;left:8px!important;right:8px!important;top:auto!important;bottom:0!important;max-height:60vh;border-radius:12px 12px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.2)}
-  .ms-menu .ms-list{max-height:45vh}
+  .filter-bar{flex-wrap:wrap;gap:6px}
   .tbl-wrap{font-size:11px}
   .tbl-wrap th{padding:5px 6px;font-size:10px}
   .tbl-wrap td{padding:4px 6px;font-size:11px}
@@ -328,7 +325,7 @@ class MS {
       lbl.appendChild(sp);list.appendChild(lbl);
     });
     menu.appendChild(list);w.appendChild(menu);this.menuEl=menu;menu.addEventListener('click',e=>e.stopPropagation());
-    btn.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.ms-menu.open').forEach(m=>{if(m!==menu){m.classList.remove('open');_removeOverlay();}});if(!menu.classList.contains('open')){menu.classList.add('open');if(window.innerWidth<=640)_addOverlay(menu);}else{menu.classList.remove('open');_removeOverlay();}});
+    btn.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.ms-menu.open').forEach(m=>{if(m!==menu)m.classList.remove('open')});menu.classList.toggle('open');});
     this.listEl=list;
     this.el.appendChild(w);this._upd();
   }
@@ -349,9 +346,7 @@ class MS {
     this._upd();
   }
 }
-document.addEventListener('click',()=>{document.querySelectorAll('.ms-menu.open').forEach(m=>m.classList.remove('open'));_removeOverlay();});
-function _addOverlay(menu){if(document.getElementById('ms-overlay'))return;const ov=document.createElement('div');ov.id='ms-overlay';ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:45;';ov.addEventListener('click',()=>{menu.classList.remove('open');_removeOverlay();});document.body.appendChild(ov);}
-function _removeOverlay(){const ov=document.getElementById('ms-overlay');if(ov)ov.remove();}
+document.addEventListener('click',()=>document.querySelectorAll('.ms-menu.open').forEach(m=>m.classList.remove('open')));
 
 // ═══ FILTER HELPERS ═════════════════════════════════════════════════════════
 function makeFilters(prefix,cb){
